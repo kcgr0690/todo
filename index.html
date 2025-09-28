@@ -7,24 +7,22 @@
         <link rel="stylesheet" href = "styles.css">
 
     </head>
-    <body style="background-color: lightblue; text-align: center;">
-        <h1 style="color:midnightblue;">My Athena Project</h1>
-        <p><del>This is cool!</del></p>
-
-        <script src = "script.js"></script>
+    <body>
+        <h1>My Athena Project</h1>
 
         <div>
             <input type = "text" id = "taskInput" placeholder = "Enter your task"/>
             <select id = "prioritySelect">
                 <option value = "3">High Priority</option>
                 <option value = "2">Medium Priority</option>
-                <option value = "1">Medium Priority</option>
+                <option value = "1">Low Priority</option>
             </select>
+            <button id = "addTaskButton">Add</button>
 
         </div>
+        <ul id = "taskList"></ul>
 
-        
-
+        <script src = "script.js"></script>
     </body>
 
 </html>
