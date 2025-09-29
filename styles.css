@@ -12,6 +12,7 @@ div {
     margin: 20px auto;
     display: flex;
     justify-content: center;
+    gap: 0;
     width: fit-content;
 }
 
@@ -32,4 +33,30 @@ button {
     border-left: none;
     border-radius: 0 25px 25px 0;
     font-size: 14px;
+}
+
+li {
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid gray;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+
+}
+
+li.completed {
+    text-decoration: line-through;
+}
+
+li.high {
+    color: black;
+}
+
+li.medium {
+    color:navy;
+}
+
+li.low {
+    color:midnightblue;
 }
