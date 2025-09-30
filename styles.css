@@ -33,12 +33,13 @@ input[type = "text"] {
 
 button {
     padding: 8px 12px;
-    background-color: midnightblue;
+    background-color:cornflowerblue;
     color: white;
     border: 1px solid black;
     border-left: none;
     border-radius: 0 25px 25px 0;
     font-size: 14px;
+
 }
 
 li {
@@ -61,14 +62,16 @@ li.completed {
 li.high {
     color: black;
     font-weight: bold;
+    font-style: italic;
 }
 
 li.medium {
     color:navy;
+    font-weight: bold;
 }
 
 li.low {
-    color:midnightblue;
+    color:royalblue;
 }
 
 li button {
