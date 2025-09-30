@@ -3,6 +3,10 @@ const prioritySelect = document.getElementById("prioritySelect");
 const addTaskButton = document.getElementById("addTaskButton");
 const taskList = document.getElementById("taskList");
 
+function sortTasks() {
+    
+}
+
 addTaskButton.addEventListener("click", function() {
     if (taskInput.value.trim() !== "") {
         const li = document.createElement("li");
