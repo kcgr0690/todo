@@ -48,6 +48,9 @@ li {
     border-radius: 25px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
 
 }
 
