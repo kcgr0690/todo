@@ -1,13 +1,13 @@
 ul {
     list-style: none;
-    width: 300px;
+    width: 500px;
     margin: 20px auto;
 }
 
 body {
     background-color: lightblue;
     text-align: center;
-    font-family: Arial, sans-serif;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
 }
 
 h1 {
@@ -60,6 +60,7 @@ li.completed {
 
 li.high {
     color: black;
+    font-weight: bold;
 }
 
 li.medium {
