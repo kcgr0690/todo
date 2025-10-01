@@ -37,6 +37,7 @@ addTaskButton.addEventListener("click", function() {
         checkButton.textContent = "✔";
         li.appendChild(checkButton)
         taskList.appendChild(li);
+        sortTasks();
         taskInput.value = "";
     }
 });
@@ -55,6 +56,7 @@ taskInput.addEventListener("keypress", function(event) {
         checkButton.textContent = "✔";
         li.appendChild(checkButton);
         taskList.appendChild(li);
+        sortTasks();
         taskInput.value = "";
     }
 });
