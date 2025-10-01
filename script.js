@@ -4,6 +4,18 @@ const addTaskButton = document.getElementById("addTaskButton");
 const taskList = document.getElementById("taskList");
 
 function sortTasks() {
+    const priorityMap = {
+        high: 3,
+        medium:2,
+        low:1
+    };
+
+    const tasks = Array.from(taskList.children);
+    tasks.sort((a,b) {
+        const priorityA = priorityMap[a.classList[0]] || 1;
+        const 
+
+    });
     
 }
 
