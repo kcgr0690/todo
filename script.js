@@ -60,3 +60,12 @@ taskInput.addEventListener("keypress", function(event) {
         taskInput.value = "";
     }
 });
+
+taskList.addEventListener("click", function(event) {
+    if (event.target.tagName === "BUTTON") {
+        const li = event.target.tagName.parentElement;
+        li.classList.toggle("completed");
+
+    }
+
+});
