@@ -11,11 +11,15 @@ function sortTasks() {
     };
 
     const tasks = Array.from(taskList.children);
-    tasks.sort((a,b) {
+    tasks.sort((a,b) => {
         const priorityA = priorityMap[a.classList[0]] || 1;
-        const 
+        const priorityB = priorityMap[b.classList[0]] || 1;
+        return priorityB - priorityA;
 
     });
+
+    taskList.innerHTML = "";
+    tasks.forEach(task => taskList.appendChild(task));
     
 }
 
