@@ -77,3 +77,11 @@ taskList.addEventListener("click", function(event) {
     }
 
 });
+
+taskList.addEventListener("click", function(event){
+    if (event.target.tagName === "BUTTON" && event.target.textContent === "✕") {
+        const li = event.target.parentElement;
+        li.remove();
+    }
+
+});
