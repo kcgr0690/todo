@@ -59,6 +59,7 @@ li {
 
 li.completed {
     text-decoration: line-through;
+    
 }
 
 li.high {
@@ -80,6 +81,8 @@ li button {
     margin-left: 10px;
     background-color: transparent;
     border: 1px solid midnightblue;
+    border-radius: 0 25px 25px 0;
     color: midnightblue;
     padding: 2px 8px;
+    flex-shrink: 0;
 }
