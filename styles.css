@@ -84,11 +84,11 @@ li.low {
 
 li button:first-child {
     margin-right: 10px;
-    background-color:royalblue;
+    background-color:lightskyblue;
     border: 1px solid midnightblue;
-    border-radius: 25px 0 0 25px;
+    border-radius: 25px;
     color: midnightblue;
-    padding: 2px 8px;
+    padding: 2px 12px;
     flex-shrink: 0;
 }
 
