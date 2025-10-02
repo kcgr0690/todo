@@ -93,3 +93,23 @@ taskList.addEventListener("click", function(event){
     }
 
 });
+
+taskList.addEventListener("click", function(event) {
+    if (event.target.tagName !== "BUTTON") return;
+    const btn = event.target;
+    const li = btn.parentElement;
+
+    if (btn.textContent === "✎") {
+    const span = li.querySelector("span");
+    if (!span) return;
+
+    const oldText = span.textContent;
+
+    const input = document.createElement("input");
+    input.type = "text";
+    input.value = oldText;
+    input.className = "inline-edit";
+    li.replaceChild(input, span)
+
+    }
+});
