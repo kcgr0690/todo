@@ -82,7 +82,9 @@ li.low {
     color:royalblue;
 }
 
-li button {
+
+
+li button:last-child {
     margin-left: 10px;
     background-color: transparent;
     border: 1px solid midnightblue;
