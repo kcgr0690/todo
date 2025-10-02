@@ -35,8 +35,8 @@ input[type = "text"] {
 
 button {
     padding: 8px;
-    background-color:cornflowerblue;
-    color: white;
+    background-color:royalblue;
+    color:beige;
     border: 1px solid black;
     border-left: none;
     border-radius: 0 25px 25px 0;
@@ -84,7 +84,7 @@ li.low {
 
 li button:first-child {
     margin-right: 10px;
-    background-color:hotpink;
+    background-color:royalblue;
     border: 1px solid midnightblue;
     border-radius: 25px 0 0 25px;
     color: midnightblue;
