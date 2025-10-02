@@ -78,7 +78,7 @@ taskInput.addEventListener("keypress", function(event) {
 });
 
 taskList.addEventListener("click", function(event) {
-    if (event.target.tagName === "BUTTON") {
+    if (event.target.tagName === "BUTTON" && event.target.textContent === "✔") {
         const li = event.target.parentElement;
         li.classList.toggle("completed");
 
