@@ -57,8 +57,9 @@ li {
 
 }
 
-li.completed {
+li.completed span {
     text-decoration: line-through;
+    color:grey;
     
 }
 
