@@ -1,7 +1,7 @@
 ul {
     list-style: none;
     width: 500px;
-    margin:20px auto;
+    margin: 20px auto;
 }
 
 body {
@@ -42,7 +42,6 @@ button {
     border-left: none;
     border-radius: 0 25px 25px 0;
     font-size: 14px;
-
 }
 
 li {
