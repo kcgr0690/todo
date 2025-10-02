@@ -58,14 +58,14 @@ taskInput.addEventListener("keypress", function(event) {
         if (priority === "3") li.classList.add("high");
         else if (priority === "2") li.classList.add("medium");
         else if (priority === "1") li.classList.add("low");
-        li.appendChild(taskText);
         const checkButton = document.createElement("button");
         checkButton.textContent = "✔";
-        li.appendChild(checkButton);
         const deleteButton = document.createElement("button");
         deleteButton.textContent = "✕";
         li.appendChild(deleteButton);
+        li.appendChild(taskText);
         taskList.appendChild(li);
+        li.appendChild(checkButton);
         sortTasks();
         taskInput.value = "";
     }
