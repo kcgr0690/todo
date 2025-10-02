@@ -40,9 +40,12 @@ addTaskButton.addEventListener("click", function() {
 
         const deleteButton = document.createElement("button");
         deleteButton.textContent = "✕";
+        const editButton = document.createElement("button");
+        editButton.textContent = "✎";
         li.appendChild(deleteButton);
         li.appendChild(taskText);
         li.appendChild(checkButton)
+        li.appendChild(editButton)
         taskList.appendChild(li);
         sortTasks();
         taskInput.value = "";
@@ -62,10 +65,13 @@ taskInput.addEventListener("keypress", function(event) {
         checkButton.textContent = "✔";
         const deleteButton = document.createElement("button");
         deleteButton.textContent = "✕";
+        const editButton = document.createElement("button")
+        editButton.textContent = "✎";
         li.appendChild(deleteButton);
         li.appendChild(taskText);
         taskList.appendChild(li);
         li.appendChild(checkButton);
+        li.appendChild(editButton)
         sortTasks();
         taskInput.value = "";
     }
