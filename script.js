@@ -23,6 +23,8 @@ function sortTasks() {
     
 }
 
+
+
 addTaskButton.addEventListener("click", function() {
     if (taskInput.value.trim() !== "") {
         const li = document.createElement("li");
@@ -36,6 +38,9 @@ addTaskButton.addEventListener("click", function() {
         const checkButton = document.createElement("button");
         checkButton.textContent = "✔";
         li.appendChild(checkButton)
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "✕";
+        li.appendChild(deleteButton);
         taskList.appendChild(li);
         sortTasks();
         taskInput.value = "";
@@ -55,6 +60,9 @@ taskInput.addEventListener("keypress", function(event) {
         const checkButton = document.createElement("button");
         checkButton.textContent = "✔";
         li.appendChild(checkButton);
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "✕";
+        li.appendChild(deleteButton);
         taskList.appendChild(li);
         sortTasks();
         taskInput.value = "";

@@ -57,6 +57,10 @@ li {
 
 }
 
+li span {
+    flex-grow: 1;
+}
+
 li.completed span {
     text-decoration: line-through;
     color:grey;
