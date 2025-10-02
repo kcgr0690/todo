@@ -1,7 +1,7 @@
 ul {
     list-style: none;
     width: 500px;
-    margin: 20px auto;
+    margin:20px auto;
 }
 
 body {
@@ -25,12 +25,13 @@ div {
 }
 
 input[type = "text"] {
-    width: 200px;
+    width: 300px;
     padding: 8px;
     border: 1px solid black;
     border-right: none;
     border-radius: 25px 0 0 25px;
     font-size: 14px;
+    background-color:lightsteelblue;
 }
 
 button {
@@ -52,13 +53,14 @@ li {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
+    width: 500px;
     box-sizing: border-box;
-
+    text-align: center;
 }
 
 li span {
     flex-grow: 1;
+    text-align: center;
 }
 
 li.completed span {
@@ -87,7 +89,7 @@ li button:first-child {
     background-color:lightskyblue;
     border: 1px solid midnightblue;
     border-radius: 25px;
-    color: midnightblue;
+    color:midnightblue;
     padding: 2px 12px;
     flex-shrink: 0;
 }
