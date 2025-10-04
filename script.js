@@ -2,10 +2,11 @@ const taskInput = document.getElementById("taskInput");
 const prioritySelect = document.getElementById("prioritySelect");
 const addTaskButton = document.getElementById("addTaskButton");
 const taskList = document.getElementById("taskList");
+const dueDateInput = document.getElementById("dueDateInput")
 const dueDateValue = dueDateInput.value;
 
 if (dueDateValue) {
-    dueSpan.className = document.createElement("span");
+    const dueSpan = document.createElement("span");
     dueSpan.className = "due-date";
     dueSpan.textContent = new Date(dueDateValue).toLocaleDateString();
     taskText.appendChild(dueSpan);
