@@ -59,7 +59,11 @@ li {
 }
 
 li span {
-    flex-grow: 1;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:8px;
     text-align: center;
 }
 
@@ -84,7 +88,7 @@ li.low {
     color:royalblue;
 }
 
-li button:first-child {
+li button:first-of-type {
     margin-right: 10px;
     background-color:lightskyblue;
     border: 1px solid midnightblue;
@@ -107,7 +111,7 @@ li button:nth-child(3) {
 
 
 
-li button:last-child {
+li button:last-of-type {
     margin-left: 10px;
     background-color: transparent;
     border: 1px solid midnightblue;
@@ -117,7 +121,7 @@ li button:last-child {
     flex-shrink: 0;
     height: 25px;
     width: 30px;
-    display: left;
+    display: center;
     font-size: 16px;
 
 }

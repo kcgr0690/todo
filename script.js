@@ -72,6 +72,7 @@ taskInput.addEventListener("keypress", function(event) {
         taskList.appendChild(li);
         li.appendChild(editButton)
         li.appendChild(checkButton);
+        sortTasks();
         taskInput.value = "";
     }
 });
