@@ -46,12 +46,12 @@ button {
 }
 
 li {
-    padding: 8px;
+    padding: 5px;
     margin: 5px 0;
     border: 1px solid gray;
     border-radius: 25px;
     display: flex;
-    align-items: left;
+    align-items: center;
     justify-content: space-between;
     width: 500px;
     box-sizing: border-box;
@@ -92,6 +92,7 @@ li button:first-child {
     color:midnightblue;
     padding: 2px 14px;
     flex-shrink: 0;
+    margin-left: 5px;
 }
 
 
@@ -102,6 +103,6 @@ li button:last-child {
     border: 1px solid midnightblue;
     border-radius: 0 25px 25px 0;
     color: midnightblue;
-    padding: 2px 8px;
+    padding: 2px 14px;
     flex-shrink: 0;
 }
