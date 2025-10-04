@@ -94,38 +94,46 @@ taskList.addEventListener("click", function(event){
 
 });
 
-taskList.addEventListener("click", function(event) {
+taskList.addEventListener("click", function (event) {
+  if (event.target.tagName !== "BUTTON" || event.target.textContent !== "✎") return;
 
-    if (event.target.tagName === "BUTTON" && event.target.textContent === "✎") {
-        const li = event.target.parentElement;
-        const span = li.querySelector("span");
+  const li = event.target.parentElement;
+  const span = li.querySelector("span");
+  if (!span) return;
 
-        if (!span) return;
+  const oldText = span.textContent;
+  const input = document.createElement("input");
+  input.type = "text";
+  input.value = oldText;
+  input.className = "inline-edit";
 
-        const oldText = span.textContent;
+  li.replaceChild(input, span);
+  input.focus();
+  input.select();
 
-        const input = document.createElement("input");
-        input.type = "text";
-        input.value = oldText;
-        input.className = "inline-edit";
-        li.replaceChild(input, span);
-        
-        input.focus();
+  let finished = false;
+  const finish = (newText) => {
+    if (finished) return;
+    finished = true;
+    const newSpan = document.createElement("span");
+    newSpan.textContent = newText;
+    li.replaceChild(newSpan, input);
+  };
 
-        const saveEdit = (newText) => {
-            const newSpan = document.createElement("span");
-            newSpan.textContent = newText;
-            li.replaceChild(newSpan, input);
 
-        };
+  input.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      finish(input.value.trim() || oldText);
+    } else if (e.key === "Escape") {
+      e.preventDefault();
 
-        input.addEventListener("keydown", (e) => {
-            if (e.key === "Enter") saveEdit(input.value.trim() || oldText);
-            else if (e.key === "Escape") saveEdit(oldText);
-
-        });
-
-        input.addEventListener("blur", () => saveEdit(input.value.trim() || oldText));
-
+      finish(oldText);
     }
+  });
+
+
+  input.addEventListener("blur", function () {
+    finish(input.value.trim() || oldText);
+  });
 });
