@@ -2,6 +2,14 @@ const taskInput = document.getElementById("taskInput");
 const prioritySelect = document.getElementById("prioritySelect");
 const addTaskButton = document.getElementById("addTaskButton");
 const taskList = document.getElementById("taskList");
+const dueDateValue = dueDateInput.value;
+
+if (dueDateValue) {
+    dueSpan.className = document.createElement("span");
+    dueSpan.className = "due-date";
+    dueSpan.textContent = new Date(dueDateValue).toLocaleDateString();
+    taskText.appendChild(dueSpan);
+}
 
 function sortTasks() {
     const priorityMap = {
