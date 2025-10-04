@@ -5,12 +5,7 @@ const taskList = document.getElementById("taskList");
 const dueDateInput = document.getElementById("dueDateInput")
 const dueDateValue = dueDateInput.value;
 
-if (dueDateValue) {
-    const dueSpan = document.createElement("span");
-    dueSpan.className = "due-date";
-    dueSpan.textContent = new Date(dueDateValue).toLocaleDateString();
-    taskText.appendChild(dueSpan);
-}
+
 
 function sortTasks() {
     const priorityMap = {
@@ -58,6 +53,12 @@ addTaskButton.addEventListener("click", function() {
         taskList.appendChild(li);
         sortTasks();
         taskInput.value = "";
+            if (dueDateValue) {
+        const dueSpan = document.createElement("span");
+        dueSpan.className = "due-date";
+        dueSpan.textContent = new Date(dueDateValue).toLocaleDateString();
+        taskText.appendChild(dueSpan);
+    }
     }
 });
 
@@ -83,6 +84,12 @@ taskInput.addEventListener("keypress", function(event) {
         li.appendChild(checkButton);
         sortTasks();
         taskInput.value = "";
+            if (dueDateValue) {
+        const dueSpan = document.createElement("span");
+        dueSpan.className = "due-date";
+        dueSpan.textContent = new Date(dueDateValue).toLocaleDateString();
+        taskText.appendChild(dueSpan);
+    }
     }
 });
 
