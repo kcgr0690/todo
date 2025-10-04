@@ -95,6 +95,16 @@ li button:first-child {
     margin-left: 5px;
 }
 
+li button:nth-child(3) {
+    margin-left: 10px;
+    background-color:#7AA7F0;
+    border: 1px solid midnightblue;
+    border-radius: 8px;
+    color: midnightblue;
+    padding: 2px 5px;
+    flex-shrink: 0;
+}
+
 
 
 li button:last-child {
@@ -103,6 +113,11 @@ li button:last-child {
     border: 1px solid midnightblue;
     border-radius: 0 25px 25px 0;
     color: midnightblue;
-    padding: 2px 14px;
+    padding: 0;
     flex-shrink: 0;
+    height: 25px;
+    width: 30px;
+    display: left;
+    font-size: 16px;
+
 }
