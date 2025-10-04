@@ -95,21 +95,37 @@ taskList.addEventListener("click", function(event){
 });
 
 taskList.addEventListener("click", function(event) {
-    if (event.target.tagName !== "BUTTON") return;
-    const btn = event.target;
-    const li = btn.parentElement;
 
-    if (btn.textContent === "✎") {
-    const span = li.querySelector("span");
-    if (!span) return;
+    if (event.target.tagName === "BUTTON" && event.target.textContent === "✎") {
+        const li = event.target.parentElement;
+        const span = li.querySelector("span");
 
-    const oldText = span.textContent;
+        if (!span) return;
 
-    const input = document.createElement("input");
-    input.type = "text";
-    input.value = oldText;
-    input.className = "inline-edit";
-    li.replaceChild(input, span)
+        const oldText = span.textContent;
+
+        const input = document.createElement("input");
+        input.type = "text";
+        input.value = oldText;
+        input.className = "inline-edit";
+        li.replaceChild(input, span);
+        
+        input.focus();
+
+        const saveEdit = (newText) => {
+            const newSpan = document.createElement("span");
+            newSpan.textContent = newText;
+            li.replaceChild(newSpan, input);
+
+        };
+
+        input.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") saveEdit(input.value.trim() || oldText);
+            else if (e.key === "Escape") saveEdit(oldText);
+
+        });
+
+        input.addEventListener("blur", () => saveEdit(input.value.trim() || oldText));
 
     }
 });
