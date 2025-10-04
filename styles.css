@@ -94,6 +94,8 @@ li button:first-child {
     flex-shrink: 0;
 }
 
+
+
 li button:last-child {
     margin-left: 10px;
     background-color: transparent;

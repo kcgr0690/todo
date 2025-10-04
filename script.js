@@ -44,8 +44,8 @@ addTaskButton.addEventListener("click", function() {
         editButton.textContent = "✎";
         li.appendChild(deleteButton);
         li.appendChild(taskText);
-        li.appendChild(checkButton)
         li.appendChild(editButton)
+        li.appendChild(checkButton);
         taskList.appendChild(li);
         sortTasks();
         taskInput.value = "";
@@ -70,9 +70,8 @@ taskInput.addEventListener("keypress", function(event) {
         li.appendChild(deleteButton);
         li.appendChild(taskText);
         taskList.appendChild(li);
-        li.appendChild(checkButton);
         li.appendChild(editButton)
-        sortTasks();
+        li.appendChild(checkButton);
         taskInput.value = "";
     }
 });
