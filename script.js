@@ -2,8 +2,6 @@ const taskInput = document.getElementById("taskInput");
 const prioritySelect = document.getElementById("prioritySelect");
 const addTaskButton = document.getElementById("addTaskButton");
 const taskList = document.getElementById("taskList");
-const dueDateInput = document.getElementById("dueDateInput")
-const dueDateValue = dueDateInput.value;
 
 
 
@@ -53,11 +51,12 @@ addTaskButton.addEventListener("click", function() {
         taskList.appendChild(li);
         sortTasks();
         taskInput.value = "";
-            if (dueDateValue) {
+        const dueDateValue = dueDateInput.value;
+        if (dueDateValue) {
         const dueSpan = document.createElement("span");
         dueSpan.className = "due-date";
         dueSpan.textContent = new Date(dueDateValue).toLocaleDateString();
-        taskText.appendChild(dueSpan);
+        li.appendChild(dueSpan);
     }
     }
 });
@@ -84,12 +83,13 @@ taskInput.addEventListener("keypress", function(event) {
         li.appendChild(checkButton);
         sortTasks();
         taskInput.value = "";
-            if (dueDateValue) {
-        const dueSpan = document.createElement("span");
-        dueSpan.className = "due-date";
-        dueSpan.textContent = new Date(dueDateValue).toLocaleDateString();
-        taskText.appendChild(dueSpan);
-    }
+        const dueDateValue = dueDateInput.value;
+        if (dueDateValue) {
+            const dueSpan = document.createElement("span");
+            dueSpan.className = "due-date";
+            dueSpan.textContent = new Date(dueDateValue).toLocaleDateString();
+            li.appendChild(dueSpan);
+        }
     }
 });
 
@@ -118,16 +118,26 @@ taskList.addEventListener("click", function (event) {
   if (!span) return;
 
   const oldText = span.textContent;
-  const input = document.createElement("input");
-  input.type = "text";
-  input.value = oldText;
-  input.className = "inline-edit";
+  const oldDue = li.querySelector(".due-date") ? li.querySelector(".due-date").textContent : "";
 
-  li.replaceChild(input, span);
-  input.focus();
+  const textInput = document.createElement("input");
+  textInput.type = "text";
+  textInput.value = oldText;
+  textInput.className = "inline-edit";
+  li.replaceChild(textInput, span);
+
+  if (oldDue) {
+    const oldDueSpan = li.querySelector(",due-date");
+    const dueInput = document.createElement("input")
+    dueInput.type = "date";
+    dueInput.value = oldDueSpan.textContent;
+    li.replaceChild(dueInput, oldDueSpan);
+  }
+
+  textInput.focus();
   input.select();
 
-  let finished = false;
+  /*let finished = false;
   const finish = (newText) => {
     if (finished) return;
     finished = true;
@@ -152,4 +162,5 @@ taskList.addEventListener("click", function (event) {
   input.addEventListener("blur", function () {
     finish(input.value.trim() || oldText);
   });
+  */
 });
