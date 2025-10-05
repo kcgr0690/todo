@@ -61,7 +61,7 @@ addTaskButton.addEventListener("click", function() {
     }
 });
 
-taskInput.addEventListener("keypress", function(event) {
+taskInput.addEventListener("keydown", function(event) {
     if (event.key === "Enter" && taskInput.value.trim() !== "") {
         const li = document.createElement("li");
         const priority = prioritySelect.value;
@@ -111,7 +111,7 @@ taskList.addEventListener("click", function(event){
 });
 
 taskList.addEventListener("click", function (event) {
-  if (event.target.tagName !== "BUTTON" || event.target.textContent !== "✎") return;
+  if (!(event.target.tagName === "BUTTON" && event.target.textContent === "✎")) return;
 
   const li = event.target.parentElement;
   const span = li.querySelector("span");
@@ -121,21 +121,54 @@ taskList.addEventListener("click", function (event) {
   const oldDue = li.querySelector(".due-date") ? li.querySelector(".due-date").textContent : "";
 
   const textInput = document.createElement("input");
+  li.dataset.editSaved = false;
   textInput.type = "text";
   textInput.value = oldText;
   textInput.className = "inline-edit";
   li.replaceChild(textInput, span);
 
   if (oldDue) {
-    const oldDueSpan = li.querySelector(",due-date");
+    const oldDueSpan = li.querySelector(".due-date");
     const dueInput = document.createElement("input")
     dueInput.type = "date";
-    dueInput.value = oldDueSpan.textContent;
+    const parts = oldDueSpan.textContent.split('/');
+    dueInput.value = `${parts[2]}-${parts[0].padStart(2,'0')}-${parts[1].padStart(2,'0')}`;
     li.replaceChild(dueInput, oldDueSpan);
   }
 
   textInput.focus();
-  input.select();
+  textInput.select();
+
+  const saveEdit = (newText, newDue) => {
+    const newSpan = document.createElement("span");
+    newSpan.textContent = newText;
+    li.replaceChild(newSpan, textInput);
+
+    const existing = li.querySelector(".due-date");
+    if (existing) existing.remove();
+
+    const textSpan = li.querySelector("span");
+
+    if (newDue) {
+        const newDueSpan = document.createElement("span");
+        newDueSpan.className = "due-date"
+        newDueSpan.textContent = new Date(newDue).toLocaleDateString();
+        (textSpan || li).insertAdjacentElement("afterend", newDueSpan)
+    } else if (oldDue) {
+        const newDueSpan = document.createElement("span");
+        newDueSpan.className = "due-date";
+        newDueSpan.textContent = oldDue;
+        (textSpan || li).insertAdjacentElement("afterend",newDueSpan);
+    }
+  
+  }
+   textInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") saveEdit(textInput.value.trim() || oldText, li.querySelector("input[type='date']") ? li.querySelector("input[type='date']").value : oldDue);
+        else if (e.key === "Escape") saveEdit(oldText, oldDue);
+
+    });
+
+
 
   /*let finished = false;
   const finish = (newText) => {
@@ -163,4 +196,11 @@ taskList.addEventListener("click", function (event) {
     finish(input.value.trim() || oldText);
   });
   */
+    textInput.addEventListener("blur", () => {
+    setTimeout(() => {
+        if (document.activeElement === li.querySelector("input[type='date']")) return;
+        saveEdit(textInput.value.trim() || oldText, li.querySelector("input[type='date']") ? li.querySelector("input[type='date']").value : oldDue);
+    }, 120);
+    });
 });
+

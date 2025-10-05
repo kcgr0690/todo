@@ -132,4 +132,5 @@ li button:last-of-type {
     border-radius: 5px;
     padding: 2px 5px;
     margin-left: 6px;
+    width: 10px;
 }
