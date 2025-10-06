@@ -46,11 +46,6 @@ addTaskButton.addEventListener("click", function() {
         editButton.textContent = "✎";
         li.appendChild(deleteButton);
         li.appendChild(taskText);
-        li.appendChild(editButton)
-        li.appendChild(checkButton);
-        taskList.appendChild(li);
-        sortTasks();
-        taskInput.value = "";
         const dueDateValue = dueDateInput.value;
         if (dueDateValue) {
         const dueSpan = document.createElement("span");
@@ -58,6 +53,13 @@ addTaskButton.addEventListener("click", function() {
         dueSpan.textContent = new Date(dueDateValue).toLocaleDateString();
         li.appendChild(dueSpan);
     }
+        li.appendChild(editButton)
+        li.appendChild(checkButton);
+        taskList.appendChild(li);
+        sortTasks();
+        taskInput.value = "";
+        
+        
     }
 });
 
@@ -79,10 +81,6 @@ taskInput.addEventListener("keydown", function(event) {
         li.appendChild(deleteButton);
         li.appendChild(taskText);
         taskList.appendChild(li);
-        li.appendChild(editButton)
-        li.appendChild(checkButton);
-        sortTasks();
-        taskInput.value = "";
         const dueDateValue = dueDateInput.value;
         if (dueDateValue) {
             const dueSpan = document.createElement("span");
@@ -90,6 +88,12 @@ taskInput.addEventListener("keydown", function(event) {
             dueSpan.textContent = new Date(dueDateValue).toLocaleDateString();
             li.appendChild(dueSpan);
         }
+        li.appendChild(editButton)
+        li.appendChild(checkButton);
+        sortTasks();
+        taskInput.value = "";
+
+        
     }
 });
 
