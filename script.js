@@ -118,7 +118,6 @@ taskList.addEventListener("click", function (event) {
   if (!span) return;
 
   const oldText = span.textContent;
-  // Fixed: Get the due date value correctly from the span
   const oldDueSpan = li.querySelector(".due-date");
   const oldDue = oldDueSpan ? oldDueSpan.textContent : "";
 
@@ -128,7 +127,6 @@ taskList.addEventListener("click", function (event) {
   textInput.className = "inline-edit";
   li.replaceChild(textInput, span);
 
-  // Create date input if there's an existing due date
   let dueInput = null;
   if (oldDueSpan) {
     dueInput = document.createElement("input");
@@ -179,7 +177,6 @@ taskList.addEventListener("click", function (event) {
     }
   });
 
-  // Handle blur with delay to check if focus moved to date input
   textInput.addEventListener("blur", () => {
     setTimeout(() => {
       if (dueInput && document.activeElement === dueInput) return;
@@ -188,7 +185,6 @@ taskList.addEventListener("click", function (event) {
     }, 120);
   });
 
-  // Handle date input blur if it exists
   if (dueInput) {
     dueInput.addEventListener("blur", () => {
       setTimeout(() => {
