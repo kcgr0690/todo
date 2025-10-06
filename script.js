@@ -144,7 +144,6 @@ taskList.addEventListener("click", function (event) {
     const existingDueInput = li.querySelector("input[type='date']");
     const existingDueSpan = li.querySelector(".due-date");
     
-    if (existingDueSpan) existingDueSpan.remove();
     
     const newSpan = document.createElement("span");
     newSpan.textContent = newText;
@@ -152,11 +151,12 @@ taskList.addEventListener("click", function (event) {
       li.replaceChild(newSpan, existingTextInput);
     }
     
-    if (existingDueInput) {
-      existingDueInput.remove();
-    }
+    
     
     if (newDue) {
+      if (existingDueInput) {
+      existingDueInput.remove();
+    }
       const newDueSpan = document.createElement("span");
       newDueSpan.className = "due-date";
       newDueSpan.textContent = new Date(newDue).toLocaleDateString();
