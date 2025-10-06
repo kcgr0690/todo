@@ -6,7 +6,7 @@ ul {
 }
 
 body {
-    background-color: lightblue;
+    background-color:#BFD7F7;
     text-align: center;
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
@@ -32,7 +32,7 @@ input[type = "text"] {
     border-right: none;
     border-radius: 25px 0 0 25px;
     font-size: 14px;
-    background-color:lightsteelblue;
+    background-color:#A6C2F3;
 }
 
 button {
@@ -89,7 +89,7 @@ li.low {
 
 li button:first-of-type {
     margin-right: 10px;
-    background-color:lightskyblue;
+    background-color:#A6C2F3;
     border: 1px solid midnightblue;
     border-radius: 25px;
     color:midnightblue;
@@ -98,20 +98,20 @@ li button:first-of-type {
     margin-left: 5px;
 }
 
-li button:nth-child(3) {
+li button.edit-button {
     margin-left: 10px;
     background-color:#7AA7F0;
     border: 1px solid midnightblue;
     border-radius: 8px;
     color: midnightblue;
-    padding: 2px 5px;
+    padding: 2px;
     flex-shrink: 0;
 }
 
 
 
 li button:last-of-type {
-    margin-left: 10px;
+    margin-left: 5px;
     background-color: transparent;
     border: 1px solid midnightblue;
     border-radius: 0 25px 25px 0;
@@ -119,18 +119,26 @@ li button:last-of-type {
     padding: 0;
     flex-shrink: 0;
     height: 25px;
-    width: 30px;
-    display: center;
+    width: 15px;
+    display: flex;
     font-size: 16px;
 
 }
 
+input[type="date"] {
+    padding:5px;
+    border: 1px solid midnightblue;
+    font-size: 12px;
+    background-color:#A6C2F3;
+    outline: none;
+}
+
 .due-date {
+    width: 10px;
     font-size: 12px;
     background-color:#90B9F3;
     border: 1px solid midnightblue;
     border-radius: 5px;
     padding: 2px 5px;
     margin-left: 6px;
-    width: 10px;
 }
