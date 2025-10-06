@@ -35,16 +35,6 @@ input[type = "text"] {
     background-color:#A6C2F3;
 }
 
-button {
-    padding: 8px;
-    background-color:royalblue;
-    color:beige;
-    border: 1px solid black;
-    border-left: none;
-    border-radius: 0 25px 25px 0;
-    font-size: 14px;
-}
-
 li {
     padding: 5px;
     margin: 5px 0;
@@ -102,10 +92,12 @@ li button.edit-button {
     margin-left: 10px;
     background-color:#7AA7F0;
     border: 1px solid midnightblue;
-    border-radius: 8px;
+    border-radius: 0;
     color: midnightblue;
-    padding: 2px;
+    padding: 0;
     flex-shrink: 0;
+    width: 30px;
+    height: 30px;
 }
 
 
