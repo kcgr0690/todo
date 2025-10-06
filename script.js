@@ -44,6 +44,7 @@ addTaskButton.addEventListener("click", function() {
         deleteButton.textContent = "✕";
         const editButton = document.createElement("button");
         editButton.textContent = "✎";
+        editButton.className = 'edit-button'
         li.appendChild(deleteButton);
         li.appendChild(taskText);
         const dueDateValue = dueDateInput.value;
@@ -78,6 +79,7 @@ taskInput.addEventListener("keydown", function(event) {
         deleteButton.textContent = "✕";
         const editButton = document.createElement("button")
         editButton.textContent = "✎";
+        editButton.className = 'edit-button'
         li.appendChild(deleteButton);
         li.appendChild(taskText);
         taskList.appendChild(li);
