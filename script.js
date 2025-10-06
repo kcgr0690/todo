@@ -118,18 +118,20 @@ taskList.addEventListener("click", function (event) {
   if (!span) return;
 
   const oldText = span.textContent;
-  const oldDue = li.querySelector(".due-date") ? li.querySelector(".due-date").textContent : "";
+  // Fixed: Get the due date value correctly from the span
+  const oldDueSpan = li.querySelector(".due-date");
+  const oldDue = oldDueSpan ? oldDueSpan.textContent : "";
 
   const textInput = document.createElement("input");
-  li.dataset.editSaved = false;
   textInput.type = "text";
   textInput.value = oldText;
   textInput.className = "inline-edit";
   li.replaceChild(textInput, span);
 
-  if (oldDue) {
-    const oldDueSpan = li.querySelector(".due-date");
-    const dueInput = document.createElement("input")
+  // Create date input if there's an existing due date
+  let dueInput = null;
+  if (oldDueSpan) {
+    dueInput = document.createElement("input");
     dueInput.type = "date";
     const parts = oldDueSpan.textContent.split('/');
     dueInput.value = `${parts[2]}-${parts[0].padStart(2,'0')}-${parts[1].padStart(2,'0')}`;
@@ -140,67 +142,60 @@ taskList.addEventListener("click", function (event) {
   textInput.select();
 
   const saveEdit = (newText, newDue) => {
+    const existingTextInput = li.querySelector("input[type='text']");
+    const existingDueInput = li.querySelector("input[type='date']");
+    const existingDueSpan = li.querySelector(".due-date");
+    
+    if (existingDueSpan) existingDueSpan.remove();
+    
     const newSpan = document.createElement("span");
     newSpan.textContent = newText;
-    li.replaceChild(newSpan, textInput);
-
-    const existing = li.querySelector(".due-date");
-    if (existing) existing.remove();
-
-    const textSpan = li.querySelector("span");
-
-    if (newDue) {
-        const newDueSpan = document.createElement("span");
-        newDueSpan.className = "due-date"
-        newDueSpan.textContent = new Date(newDue).toLocaleDateString();
-        (textSpan || li).insertAdjacentElement("afterend", newDueSpan)
-    } else if (oldDue) {
-        const newDueSpan = document.createElement("span");
-        newDueSpan.className = "due-date";
-        newDueSpan.textContent = oldDue;
-        (textSpan || li).insertAdjacentElement("afterend",newDueSpan);
+    if (existingTextInput) {
+      li.replaceChild(newSpan, existingTextInput);
     }
-  
-  }
-   textInput.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") saveEdit(textInput.value.trim() || oldText, li.querySelector("input[type='date']") ? li.querySelector("input[type='date']").value : oldDue);
-        else if (e.key === "Escape") saveEdit(oldText, oldDue);
-
-    });
-
-
-
-  /*let finished = false;
-  const finish = (newText) => {
-    if (finished) return;
-    finished = true;
-    const newSpan = document.createElement("span");
-    newSpan.textContent = newText;
-    li.replaceChild(newSpan, input);
+    
+    if (existingDueInput) {
+      existingDueInput.remove();
+    }
+    
+    if (newDue) {
+      const newDueSpan = document.createElement("span");
+      newDueSpan.className = "due-date";
+      newDueSpan.textContent = new Date(newDue).toLocaleDateString();
+      newSpan.insertAdjacentElement("afterend", newDueSpan);
+    }
   };
 
-
-  input.addEventListener("keydown", function (e) {
+  textInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
-      e.preventDefault();
-      finish(input.value.trim() || oldText);
+      const newDueValue = dueInput ? dueInput.value : "";
+      saveEdit(textInput.value.trim() || oldText, newDueValue);
     } else if (e.key === "Escape") {
-      e.preventDefault();
-
-      finish(oldText);
+      const originalDueValue = oldDue ? (() => {
+        const parts = oldDue.split('/');
+        return `${parts[2]}-${parts[0].padStart(2,'0')}-${parts[1].padStart(2,'0')}`;
+      })() : "";
+      saveEdit(oldText, originalDueValue);
     }
   });
 
-
-  input.addEventListener("blur", function () {
-    finish(input.value.trim() || oldText);
-  });
-  */
-    textInput.addEventListener("blur", () => {
+  // Handle blur with delay to check if focus moved to date input
+  textInput.addEventListener("blur", () => {
     setTimeout(() => {
-        if (document.activeElement === li.querySelector("input[type='date']")) return;
-        saveEdit(textInput.value.trim() || oldText, li.querySelector("input[type='date']") ? li.querySelector("input[type='date']").value : oldDue);
+      if (dueInput && document.activeElement === dueInput) return;
+      const newDueValue = dueInput ? dueInput.value : "";
+      saveEdit(textInput.value.trim() || oldText, newDueValue);
     }, 120);
-    });
-});
+  });
 
+  // Handle date input blur if it exists
+  if (dueInput) {
+    dueInput.addEventListener("blur", () => {
+      setTimeout(() => {
+        if (document.activeElement === textInput) return;
+        const newDueValue = dueInput.value;
+        saveEdit(textInput.value.trim() || oldText, newDueValue);
+      }, 120);
+    });
+  }
+});
