@@ -32,7 +32,9 @@ addTaskButton.addEventListener("click", function() {
         const li = document.createElement("li");
         const priority = prioritySelect.value;
         const taskText = document.createElement("span");
+
         
+
         taskText.textContent = taskInput.value;
         if (priority === "3") li.classList.add("high");
         else if (priority === "2") li.classList.add("medium");
@@ -50,9 +52,15 @@ addTaskButton.addEventListener("click", function() {
         li.appendChild(taskText);
         const dueDateValue = dueDateInput.value;
         if (dueDateValue) {
+          function ymdToLocalDisplay(ymd) {
+          if (!ymd) return "";
+            const [y, m, d] = ymd.split("-").map(Number);
+            const dateObj = new Date(y, m - 1, d);
+            return dateObj.toLocaleDateString();
+        }
         const dueSpan = document.createElement("span");
         dueSpan.className = "due-date";
-        dueSpan.textContent = new Date(dueDateValue).toLocaleDateString();
+        dueSpan.textContent = ymdToLocalDisplay(dueDateValue);
         li.appendChild(dueSpan);
     }
         li.appendChild(editButton)
@@ -91,8 +99,14 @@ taskInput.addEventListener("keydown", function(event) {
         if (dueDateValue) {
             const dueSpan = document.createElement("span");
             dueSpan.className = "due-date";
-            dueSpan.textContent = new Date(dueDateValue).toLocaleDateString();
+            dueSpan.textContent = ymdToLocalDisplay(dueDateValue);
             li.appendChild(dueSpan);
+            function ymdToLocalDisplay(ymd) {
+          if (!ymd) return "";
+          const [y, m, d] = ymd.split("-").map(Number);
+          const dateObj = new Date(y, m - 1, d);
+          return dateObj.toLocaleDateString();
+        }
         }
         li.appendChild(editButton)
         li.appendChild(checkButton);
@@ -169,7 +183,7 @@ taskList.addEventListener("click", function (event) {
     }
       const newDueSpan = document.createElement("span");
       newDueSpan.className = "due-date";
-      newDueSpan.textContent = new Date(newDue).toLocaleDateString();
+      newDueSpan.textContent = ymdToLocalDisplay(newDue);
       newSpan.insertAdjacentElement("afterend", newDueSpan);
     }
   };
