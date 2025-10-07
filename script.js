@@ -32,6 +32,7 @@ addTaskButton.addEventListener("click", function() {
         const li = document.createElement("li");
         const priority = prioritySelect.value;
         const taskText = document.createElement("span");
+        
         taskText.textContent = taskInput.value;
         if (priority === "3") li.classList.add("high");
         else if (priority === "2") li.classList.add("medium");
@@ -66,13 +67,16 @@ addTaskButton.addEventListener("click", function() {
 
 taskInput.addEventListener("keydown", function(event) {
     if (event.key === "Enter" && taskInput.value.trim() !== "") {
+
         const li = document.createElement("li");
         const priority = prioritySelect.value;
         const taskText = document.createElement("span");
+
         taskText.textContent = taskInput.value;
         if (priority === "3") li.classList.add("high");
         else if (priority === "2") li.classList.add("medium");
         else if (priority === "1") li.classList.add("low");
+
         const checkButton = document.createElement("button");
         checkButton.textContent = "✔";
         const deleteButton = document.createElement("button");
