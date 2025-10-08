@@ -170,6 +170,21 @@ if (oldDueSpan) {
 } else {
   li.insertBefore(dateInput, editButton);
 }
+  li._editingFrozen = false;
+  
+  dateInput.addEventListener("keydown", (ev) => {
+  if (ev.key === "Enter") {
+    ev.preventDefault();
+    li._editingFrozen = true;
+    finish(textInput.value.trim() || oldText, dateInput.value || "");
+  } else if (ev.key === "Escape") {
+    ev.preventDefault();
+    li._editingFrozen = true;
+    if (dateInput && dateInput.parentElement) dateInput.remove();
+    finish(oldText, oldYmd);
+  }
+});
+  
   textInput.focus();
   textInput.select();
 
@@ -180,6 +195,7 @@ if (oldDueSpan) {
   };
 
   const finish = (newText, newYmd) => {
+  li._editingFrozen = true;
   const newSpan = document.createElement("span");
   newSpan.className = "task-text";
   newSpan.textContent = newText;
@@ -193,7 +209,16 @@ if (oldDueSpan) {
     const [y,m,d] = ymd.split("-").map(Number);
     return new Date(y, m - 1, d).toLocaleDateString();
   };
-  const finalYmd = dateInputElement ? (dateInputElement.value || "") : (newYmd || "");
+  
+  let finalYmd;
+  if (typeof newYmd !== 'undefined' && newYmd !== null) {
+    finalYmd = newYmd;
+  } else if (dateInputElement) {
+    finalYmd = dateInputElement.value || "";
+  } else {
+    finalYmd = "";
+  }
+
 
   if (finalYmd) {
     if (existingDue) {
@@ -228,15 +253,21 @@ if (oldDueSpan) {
 
   textInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
+      e.preventDefault();
+      li._editingFrozen = true;
       const newYmd = dateInput ? dateInput.value : "";
       finish(textInput.value.trim() || oldText, newYmd);
     } else if (e.key === "Escape") {
+      e.preventDefault();
+      li._editingFrozen = true;
+      if (dateInput && dateInput.parentElement) dateInput.remove();
       finish(oldText, oldYmd);
     }
   });
 
   textInput.addEventListener("blur", () => {
     setTimeout(() => {
+      if (li._editingFrozen) return;
       if (dateInput && document.activeElement === dateInput) return;
       const newYmd = dateInput ? dateInput.value : "";
       finish(textInput.value.trim() || oldText, newYmd);
@@ -246,6 +277,7 @@ if (oldDueSpan) {
   if (dateInput) {
     dateInput.addEventListener("blur", () => {
       setTimeout(() => {
+        if (li._editingFrozen) return;
         if (document.activeElement === textInput) return;
         finish(textInput.value.trim() || oldText, dateInput.value);
       }, 120);
