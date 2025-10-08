@@ -2,7 +2,7 @@ const taskInput = document.getElementById("taskInput");
 const prioritySelect = document.getElementById("prioritySelect");
 const addTaskButton = document.getElementById("addTaskButton");
 const taskList = document.getElementById("taskList");
-
+const dueDateInput = document.getElementById("dueDateInput");
 
 
 function sortTasks() {
@@ -32,8 +32,7 @@ addTaskButton.addEventListener("click", function() {
         const li = document.createElement("li");
         const priority = prioritySelect.value;
         const taskText = document.createElement("span");
-
-        
+        taskText.className = "task-text";
 
         taskText.textContent = taskInput.value;
         if (priority === "3") li.classList.add("high");
@@ -52,16 +51,18 @@ addTaskButton.addEventListener("click", function() {
         li.appendChild(taskText);
         const dueDateValue = dueDateInput.value;
         if (dueDateValue) {
+          const dueSpan = document.createElement("span");
+          dueSpan.className = "due-date";
+          dueSpan.textContent = ymdToLocalDisplay(dueDateValue);
+          dueSpan.dataset.ymd = dueDateValue;
+          li.appendChild(dueSpan);
           function ymdToLocalDisplay(ymd) {
           if (!ymd) return "";
             const [y, m, d] = ymd.split("-").map(Number);
             const dateObj = new Date(y, m - 1, d);
             return dateObj.toLocaleDateString();
         }
-        const dueSpan = document.createElement("span");
-        dueSpan.className = "due-date";
-        dueSpan.textContent = ymdToLocalDisplay(dueDateValue);
-        li.appendChild(dueSpan);
+        
     }
         li.appendChild(editButton)
         li.appendChild(checkButton);
@@ -79,6 +80,7 @@ taskInput.addEventListener("keydown", function(event) {
         const li = document.createElement("li");
         const priority = prioritySelect.value;
         const taskText = document.createElement("span");
+        taskText.className = "task-text";
 
         taskText.textContent = taskInput.value;
         if (priority === "3") li.classList.add("high");
@@ -100,13 +102,14 @@ taskInput.addEventListener("keydown", function(event) {
             const dueSpan = document.createElement("span");
             dueSpan.className = "due-date";
             dueSpan.textContent = ymdToLocalDisplay(dueDateValue);
+            dueSpan.dataset.ymd = dueDateValue;
             li.appendChild(dueSpan);
             function ymdToLocalDisplay(ymd) {
           if (!ymd) return "";
-          const [y, m, d] = ymd.split("-").map(Number);
-          const dateObj = new Date(y, m - 1, d);
-          return dateObj.toLocaleDateString();
-        }
+            const [y, m, d] = ymd.split("-").map(Number);
+            const dateObj = new Date(y, m - 1, d);
+            return dateObj.toLocaleDateString();
+          }
         }
         li.appendChild(editButton)
         li.appendChild(checkButton);
@@ -138,83 +141,113 @@ taskList.addEventListener("click", function (event) {
   if (!(event.target.tagName === "BUTTON" && event.target.textContent === "✎")) return;
 
   const li = event.target.parentElement;
-  const span = li.querySelector("span");
-  if (!span) return;
+  const editButton = event.target;
+  const textSpan = li.querySelector(".task-text") || li.querySelector("span:not(.due-date)");
+  if (!textSpan) return;
 
-  const oldText = span.textContent;
+  const oldText = textSpan.textContent;
   const oldDueSpan = li.querySelector(".due-date");
-  const oldDue = oldDueSpan ? oldDueSpan.textContent : "";
+  const parseDisplayToYmd = (s) => {
+    if (!s) return "";
+    const parts = s.split('/');
+    if (parts.length !== 3) return "";
+    return `${parts[2]}-${parts[0].padStart(2,'0')}-${parts[1].padStart(2,'0')}`;
+  };
+  const oldYmd = oldDueSpan ? (oldDueSpan.dataset.ymd || parseDisplayToYmd(oldDueSpan.textContent)) : "";
 
   const textInput = document.createElement("input");
   textInput.type = "text";
-  textInput.value = oldText;
   textInput.className = "inline-edit";
-  li.replaceChild(textInput, span);
+  textInput.value = oldText;
+  li.replaceChild(textInput, textSpan);
 
-  let dueInput = null;
-  if (oldDueSpan) {
-    dueInput = document.createElement("input");
-    dueInput.type = "date";
-    const parts = oldDueSpan.textContent.split('/');
-    dueInput.value = `${parts[2]}-${parts[0].padStart(2,'0')}-${parts[1].padStart(2,'0')}`;
-    li.replaceChild(dueInput, oldDueSpan);
-  }
+  let dateInput = document.createElement("input");
+dateInput.type = "date";
+dateInput.value = oldYmd || "";
 
+if (oldDueSpan) {
+  li.replaceChild(dateInput, oldDueSpan);
+} else {
+  li.insertBefore(dateInput, editButton);
+}
   textInput.focus();
   textInput.select();
 
-  const saveEdit = (newText, newDue) => {
-    const existingTextInput = li.querySelector("input[type='text']");
-    const existingDueInput = li.querySelector("input[type='date']");
-    const existingDueSpan = li.querySelector(".due-date");
-    
-    
-    const newSpan = document.createElement("span");
-    newSpan.textContent = newText;
-    if (existingTextInput) {
-      li.replaceChild(newSpan, existingTextInput);
-    }
-    
-    
-    
-    if (newDue) {
-      if (existingDueInput) {
-      existingDueInput.remove();
-    }
+  const formatFromYmd = (ymd) => {
+    if (!ymd) return "";
+    const [y,m,d] = ymd.split("-").map(Number);
+    return new Date(y, m - 1, d).toLocaleDateString();
+  };
+
+  const finish = (newText, newYmd) => {
+  const newSpan = document.createElement("span");
+  newSpan.className = "task-text";
+  newSpan.textContent = newText;
+  if (textInput.parentElement) li.replaceChild(newSpan, textInput);
+
+  const dateInputElement = li.querySelector('input[type="date"]');
+  const existingDue = li.querySelector(".due-date");
+
+  const formatFromYmdLocal = (ymd) => {
+    if (!ymd) return "";
+    const [y,m,d] = ymd.split("-").map(Number);
+    return new Date(y, m - 1, d).toLocaleDateString();
+  };
+  const finalYmd = dateInputElement ? (dateInputElement.value || "") : (newYmd || "");
+
+  if (finalYmd) {
+    if (existingDue) {
+      existingDue.dataset.ymd = finalYmd;
+      existingDue.textContent = formatFromYmdLocal(finalYmd);
+      if (dateInputElement) dateInputElement.remove();
+    } else if (dateInputElement) {
       const newDueSpan = document.createElement("span");
       newDueSpan.className = "due-date";
-      newDueSpan.textContent = ymdToLocalDisplay(newDue);
-      newSpan.insertAdjacentElement("afterend", newDueSpan);
+      newDueSpan.dataset.ymd = finalYmd;
+      newDueSpan.textContent = formatFromYmdLocal(finalYmd);
+      li.replaceChild(newDueSpan, dateInputElement);
+    } else {
+      const newDueSpan = document.createElement("span");
+      newDueSpan.className = "due-date";
+      newDueSpan.dataset.ymd = finalYmd;
+      newDueSpan.textContent = formatFromYmdLocal(finalYmd);
+      li.insertBefore(newDueSpan, editButton);
     }
-  };
+  } else {
+    if (dateInputElement) dateInputElement.remove();
+    if (existingDue) existingDue.remove();
+    else if (oldYmd) {
+      const restore = document.createElement("span");
+      restore.className = "due-date";
+      restore.dataset.ymd = oldYmd;
+      restore.textContent = formatFromYmdLocal(oldYmd);
+      li.insertBefore(restore, editButton);
+    }
+  }
+};
 
   textInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
-      const newDueValue = dueInput ? dueInput.value : "";
-      saveEdit(textInput.value.trim() || oldText, newDueValue);
+      const newYmd = dateInput ? dateInput.value : "";
+      finish(textInput.value.trim() || oldText, newYmd);
     } else if (e.key === "Escape") {
-      const originalDueValue = oldDue ? (() => {
-        const parts = oldDue.split('/');
-        return `${parts[2]}-${parts[0].padStart(2,'0')}-${parts[1].padStart(2,'0')}`;
-      })() : "";
-      saveEdit(oldText, originalDueValue);
+      finish(oldText, oldYmd);
     }
   });
 
   textInput.addEventListener("blur", () => {
     setTimeout(() => {
-      if (dueInput && document.activeElement === dueInput) return;
-      const newDueValue = dueInput ? dueInput.value : "";
-      saveEdit(textInput.value.trim() || oldText, newDueValue);
+      if (dateInput && document.activeElement === dateInput) return;
+      const newYmd = dateInput ? dateInput.value : "";
+      finish(textInput.value.trim() || oldText, newYmd);
     }, 120);
   });
 
-  if (dueInput) {
-    dueInput.addEventListener("blur", () => {
+  if (dateInput) {
+    dateInput.addEventListener("blur", () => {
       setTimeout(() => {
         if (document.activeElement === textInput) return;
-        const newDueValue = dueInput.value;
-        saveEdit(textInput.value.trim() || oldText, newDueValue);
+        finish(textInput.value.trim() || oldText, dateInput.value);
       }, 120);
     });
   }
