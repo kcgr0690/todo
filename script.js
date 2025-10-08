@@ -4,6 +4,12 @@ const addTaskButton = document.getElementById("addTaskButton");
 const taskList = document.getElementById("taskList");
 const dueDateInput = document.getElementById("dueDateInput");
 
+function ymdToLocalDisplay(ymd) {
+  if (!ymd) return "";
+  const [y, m, d] = ymd.split("-").map(Number);
+  return new Date(y, m - 1, d).toLocaleDateString();
+}
+
 
 function sortTasks() {
     const priorityMap = {
@@ -49,21 +55,12 @@ addTaskButton.addEventListener("click", function() {
         editButton.className = 'edit-button'
         li.appendChild(deleteButton);
         li.appendChild(taskText);
-        const dueDateValue = dueDateInput.value;
-        if (dueDateValue) {
-          const dueSpan = document.createElement("span");
-          dueSpan.className = "due-date";
-          dueSpan.textContent = ymdToLocalDisplay(dueDateValue);
-          dueSpan.dataset.ymd = dueDateValue;
-          li.appendChild(dueSpan);
-          function ymdToLocalDisplay(ymd) {
-          if (!ymd) return "";
-            const [y, m, d] = ymd.split("-").map(Number);
-            const dateObj = new Date(y, m - 1, d);
-            return dateObj.toLocaleDateString();
-        }
-        
-    }
+        const dueDateValue = dueDateInput.value || "";
+        const dueSpan = document.createElement("span");
+         dueSpan.className = "due-date";
+        dueSpan.dataset.ymd = dueDateValue;
+        dueSpan.textContent = dueDateValue ? ymdToLocalDisplay(dueDateValue) : "";
+        li.appendChild(dueSpan);
         li.appendChild(editButton)
         li.appendChild(checkButton);
         taskList.appendChild(li);
@@ -97,20 +94,12 @@ taskInput.addEventListener("keydown", function(event) {
         li.appendChild(deleteButton);
         li.appendChild(taskText);
         taskList.appendChild(li);
-        const dueDateValue = dueDateInput.value;
-        if (dueDateValue) {
-            const dueSpan = document.createElement("span");
-            dueSpan.className = "due-date";
-            dueSpan.textContent = ymdToLocalDisplay(dueDateValue);
-            dueSpan.dataset.ymd = dueDateValue;
-            li.appendChild(dueSpan);
-            function ymdToLocalDisplay(ymd) {
-          if (!ymd) return "";
-            const [y, m, d] = ymd.split("-").map(Number);
-            const dateObj = new Date(y, m - 1, d);
-            return dateObj.toLocaleDateString();
-          }
-        }
+        const dueDateValue = dueDateInput.value || "";
+        const dueSpan = document.createElement("span");
+        dueSpan.className = "due-date";
+        dueSpan.dataset.ymd = dueDateValue;
+        dueSpan.textContent = dueDateValue ? ymdToLocalDisplay(dueDateValue) : ""; // or use "\u00A0" if you want a visible click area
+        li.appendChild(dueSpan);
         li.appendChild(editButton)
         li.appendChild(checkButton);
         sortTasks();
@@ -171,19 +160,24 @@ if (oldDueSpan) {
   li.insertBefore(dateInput, editButton);
 }
   li._editingFrozen = false;
+
+  textInput.focus();
+  textInput.select();
   
-  dateInput.addEventListener("keydown", (ev) => {
+  const tempKeyHandler = (ev) => {
   if (ev.key === "Enter") {
     ev.preventDefault();
     li._editingFrozen = true;
-    finish(textInput.value.trim() || oldText, dateInput.value || "");
+    finish(textInput.value.trim() || oldText, dateInput ? dateInput.value || "" : "");
   } else if (ev.key === "Escape") {
     ev.preventDefault();
     li._editingFrozen = true;
     if (dateInput && dateInput.parentElement) dateInput.remove();
     finish(oldText, oldYmd);
   }
-});
+};
+
+document.addEventListener("keydown", tempKeyHandler);
   
   textInput.focus();
   textInput.select();
@@ -196,6 +190,7 @@ if (oldDueSpan) {
 
   const finish = (newText, newYmd) => {
   li._editingFrozen = true;
+  document.removeEventListener("keydown", tempKeyHandler);
   const newSpan = document.createElement("span");
   newSpan.className = "task-text";
   newSpan.textContent = newText;
