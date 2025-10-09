@@ -10,7 +10,6 @@ function ymdToLocalDisplay(ymd) {
   return new Date(y, m - 1, d).toLocaleDateString();
 }
 
-
 function sortTasks() {
     const priorityMap = {
         high: 3,
@@ -66,7 +65,8 @@ addTaskButton.addEventListener("click", function() {
         taskList.appendChild(li);
         sortTasks();
         taskInput.value = "";
-        
+        taskInput.style.color = "#000";
+        taskInput.style.fontWeight = "normal";
         
     }
 });
@@ -98,7 +98,7 @@ taskInput.addEventListener("keydown", function(event) {
         const dueSpan = document.createElement("span");
         dueSpan.className = "due-date";
         dueSpan.dataset.ymd = dueDateValue;
-        dueSpan.textContent = dueDateValue ? ymdToLocalDisplay(dueDateValue) : ""; // or use "\u00A0" if you want a visible click area
+        dueSpan.textContent = dueDateValue ? ymdToLocalDisplay(dueDateValue) : "";
         li.appendChild(dueSpan);
         li.appendChild(editButton)
         li.appendChild(checkButton);
@@ -279,3 +279,24 @@ document.addEventListener("keydown", tempKeyHandler);
     });
   }
 });
+
+prioritySelect.addEventListener("change",function() {
+  const selected = prioritySelect.value;
+  if (selected === "3") {
+    taskInput.style.color = "#000";
+    taskInput.style.fontWeight = "700";
+    
+  } else if (selected === "2") {
+    taskInput.style.color = "#1F387A";
+    taskInput.style.fontWeight = "550";
+
+  } else if (selected === "1") {
+    taskInput.style.color = "#2D4CA3"
+    taskInput.style.fontWeight = "400";
+
+  } else {
+    taskInput.style.color = "#000";
+    taskInput.style.fontWeight = "normal";
+
+  }
+})

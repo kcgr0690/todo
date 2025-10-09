@@ -13,7 +13,7 @@ body {
 
 h1 {
     margin-top: 100px;
-    color:midnightblue;
+    color:#1F387A;
     margin-bottom: 50px;
 }
 
@@ -35,10 +35,20 @@ input[type = "text"] {
     background-color:#A6C2F3;
 }
 
+#taskInput {
+    color: #1F387A;
+    font-weight: normal;
+    transition: color 0.4s east, font-weight 0.4s ease;
+}
+
+#taskInput::placeholder {
+    color:#1F387A;
+}
+
 #addTaskButton {
     padding: 8px;
     background-color:royalblue;
-    color:beige;
+    color:#FDF5E6;
     border: 1px solid black;
     border-left: none;
     border-radius: 0 25px 25px 0;
@@ -50,6 +60,11 @@ input[type = "text"] {
     font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     border-color: #1F387A;
     text-align: center;
+    font:large;
+    border-width: 1px;
+    border-right: none;
+    color:#1F387A;
+    font-weight:500;
 }
 
 li {
@@ -141,6 +156,12 @@ input[type="date"] {
     font-size: 12px;
     background-color:#A6C2F3;
     outline: none;
+    color:#1F387A;
+}
+
+#dueDateInput {
+    text-align: center;
+    color:#1F387A;
 }
 
 .due-date {
